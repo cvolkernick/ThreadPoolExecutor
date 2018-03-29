@@ -45,5 +45,7 @@ public class DefaultExecutorSupplier {
         return forBackgroundTasks;
     }
 
-    public Executor forMainThreadTasks() {}
+    public Executor forMainThreadTasks() {
+        return mainThreadExecutor;
+    }
 }
