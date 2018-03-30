@@ -15,7 +15,6 @@ public class MainActivity extends AppCompatActivity {
     private ProgressBar bar3;
     private ProgressBar bar4;
     private int seconds;
-    int i;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,60 +26,90 @@ public class MainActivity extends AppCompatActivity {
     public void runThreads(View view) {
         random = new Random();
 
-        for (i = 1; i < 5; i++) {
-            seconds = random.nextInt(((10 - 1) + 1) + 1);
+        bar1.setProgress(0);
+        bar2.setProgress(0);
+        bar3.setProgress(0);
+        bar4.setProgress(0);
+        
+        DefaultExecutorSupplier.getSupplier().forBackgroundTasks().execute(new Runnable() {
+            @Override
+            public void run() {
+                seconds = random.nextInt(10 - 1) + 1;
+                bar1.setMax(seconds*10);
 
-            switch (i) {
-                case 1:
-                    bar1.setMax(seconds*10);
-                    break;
-                case 2:
-                    bar2.setMax(seconds*10);
-                    break;
-                case 3:
-                    bar3.setMax(seconds*10);
-                    break;
-                case 4:
-                    bar4.setMax(seconds*10);
-                    break;
-            }
-
-            DefaultExecutorSupplier.getSupplier().forBackgroundTasks().execute(new Runnable() {
-
-                @Override
-                public void run() {
+                int progress = 0;
+                for (int i = 0; i < seconds; i++) {
                     try {
-                        int progress = 0;
+                        Thread.sleep(1000);
+                        progress += 10;
 
-                        for (int j = 1; j <= seconds ; j++) {
-                            Thread.sleep(1000);
-                            switch(i) {
-                                case 1:
-                                    bar1.setMax(seconds*10);
-                                    bar1.setProgress(progress);
-                                    break;
-                                case 2:
-                                    bar2.setMax(seconds*10);
-                                    bar2.setProgress(progress);
-                                    break;
-                                case 3:
-                                    bar3.setMax(seconds*10);
-                                    bar3.setProgress(progress);
-                                    break;
-                                case 4:
-                                    bar4.setMax(seconds*10);
-                                    bar4.setProgress(progress);
-                                    break;
-                            }
-
-                            progress += 10;
-                        }
-                    } catch(InterruptedException e) {
-
+                        bar1.setProgress(progress);
+                    } catch (InterruptedException e) {
+                        // do nothing
                     }
                 }
-            });
-        }
+            }
+        });
+
+        DefaultExecutorSupplier.getSupplier().forBackgroundTasks().execute(new Runnable() {
+            @Override
+            public void run() {
+                seconds = random.nextInt(10 - 1) + 1;
+                bar2.setMax(seconds*10);
+
+                int progress = 0;
+                for (int i = 0; i < seconds; i++) {
+                    try {
+                        Thread.sleep(1000);
+                        progress += 10;
+
+                        bar2.setProgress(progress);
+                    } catch (InterruptedException e) {
+                        // do nothing
+                    }
+                }
+            }
+        });
+
+        DefaultExecutorSupplier.getSupplier().forBackgroundTasks().execute(new Runnable() {
+            @Override
+            public void run() {
+                seconds = random.nextInt(10 - 1) + 1;
+                bar3.setMax(seconds*10);
+
+                int progress = 0;
+                for (int i = 0; i < seconds; i++) {
+                    try {
+                        Thread.sleep(1000);
+                        progress += 10;
+
+                        bar3.setProgress(progress);
+                    } catch (InterruptedException e) {
+                        // do nothing
+                    }
+                }
+            }
+        });
+
+        DefaultExecutorSupplier.getSupplier().forBackgroundTasks().execute(new Runnable() {
+            @Override
+            public void run() {
+                seconds = random.nextInt(10 - 1) + 1;
+                bar4.setMax(seconds*10);
+
+                int progress = 0;
+                for (int i = 0; i < seconds; i++) {
+                    try {
+                        Thread.sleep(1000);
+                        progress += 10;
+
+                        bar4.setProgress(progress);
+                    } catch (InterruptedException e) {
+                        // do nothing
+                    }
+                }
+            }
+        });
     }
 
     private void bindViews() {
